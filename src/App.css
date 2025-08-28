@@ -40,3 +40,32 @@
 .read-the-docs {
   color: #888;
 }
+
+.container>h2 {
+  color: white;
+  margin-bottom: 0;
+}
+
+.container>p {
+  margin-top: 6px;
+}
+
+.box {
+  display: flex;
+  gap: 2rem;
+
+}
+
+.container {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgb(20, 20, 20);
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
