@@ -17,7 +17,7 @@ type Needle = {
   color: string;
 };
 
-const needle = ({ value, data, cx, cy, iR, oR, color }: Needle) => {
+const needle = ({ value, cx, cy, iR, oR, color }: Needle) => {
   // const total = data.reduce((sum, entry) => sum + entry.value, 0);
   const total = 100;
   const ang = 180.0 * (1 - value / total);
