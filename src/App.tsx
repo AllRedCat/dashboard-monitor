@@ -4,6 +4,8 @@ import FullPieChart from './components/fullPieChart'
 import LineChart from './components/lineChart'
 import './App.css'
 
+
+
 type Metrics = {
   cpu_percent: number;
   disk_free: number;
