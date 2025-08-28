@@ -1,4 +1,4 @@
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 
 interface NetworkDataPoint {
     name: string;
@@ -15,7 +15,7 @@ interface LineChartProps {
 
 const LineChart = ({ width, height, data }: LineChartProps) => {
     // Garantir que data sempre tenha valores válidos e seja um array
-    const chartData = Array.isArray(data) 
+    const chartData = Array.isArray(data)
         ? data.map(item => ({
             name: item?.name || '0',
             received: Number(item?.received) || 0,
@@ -34,60 +34,60 @@ const LineChart = ({ width, height, data }: LineChartProps) => {
     }
 
     return (
-        <ResponsiveContainer width={width} height={height}>
-            <AreaChart
-                data={chartData}
-                margin={{
-                    top: 0,
-                    right: 0,
-                    left: 0,
-                    bottom: 0,
+        <AreaChart
+            data={chartData}
+            width={width}
+            height={height}
+            margin={{
+                top: 0,
+                right: 0,
+                left: 0,
+                bottom: 0,
+            }}
+        >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip
+                formatter={(value: number, name: string) => {
+                    const absValue = Math.abs(Number(value));
+                    let formattedValue = value;
+                    let unit = 'B/s';
+
+                    if (absValue < 1024) {
+                        formattedValue = Number(value);
+                        unit = 'B/s';
+                    } else if (absValue < 1024 * 1024) {
+                        formattedValue = Number(value) / 1024;
+                        unit = 'KB/s';
+                    } else if (absValue < 1024 * 1024 * 1024) {
+                        formattedValue = Number(value) / (1024 * 1024);
+                        unit = 'MB/s';
+                    } else {
+                        formattedValue = Number(value) / (1024 * 1024 * 1024);
+                        unit = 'GB/s';
+                    }
+
+                    return [`${formattedValue.toFixed(2)} ${unit}`, name];
                 }}
-            >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip
-                    formatter={(value: number, name: string) => {
-                        const absValue = Math.abs(Number(value));
-                        let formattedValue = value;
-                        let unit = 'B/s';
-                        
-                        if (absValue < 1024) {
-                            formattedValue = Number(value);
-                            unit = 'B/s';
-                        } else if (absValue < 1024 * 1024) {
-                            formattedValue = Number(value) / 1024;
-                            unit = 'KB/s';
-                        } else if (absValue < 1024 * 1024 * 1024) {
-                            formattedValue = Number(value) / (1024 * 1024);
-                            unit = 'MB/s';
-                        } else {
-                            formattedValue = Number(value) / (1024 * 1024 * 1024);
-                            unit = 'GB/s';
-                        }
-                        
-                        return [`${formattedValue.toFixed(2)} ${unit}`, name];
-                    }}
-                />
-                <Area
-                    type="monotone"
-                    dataKey="received"
-                    stroke="#8884d8"
-                    fill="#8884d8"
-                    name="Received"
-                    isAnimationActive={false}
-                />
-                <Area
-                    type="monotone"
-                    dataKey="sent"
-                    stroke="#82ca9d"
-                    fill="#82ca9d"
-                    name="Sent"
-                    isAnimationActive={false}
-                />
-            </AreaChart>
-        </ResponsiveContainer>
+            />
+            <Area
+                type="monotone"
+                dataKey="received"
+                stroke="#8884d8"
+                fill="#8884d8"
+                name="Received"
+                isAnimationActive={false}
+            />
+            <Area
+                type="monotone"
+                dataKey="sent"
+                stroke="#82ca9d"
+                fill="#82ca9d"
+                name="Sent"
+                isAnimationActive={false}
+            />
+        </AreaChart>
     );
 };
 

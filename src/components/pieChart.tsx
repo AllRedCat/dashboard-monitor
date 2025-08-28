@@ -52,9 +52,11 @@ export default function ChartPie(wid: number, hei: number, val: number) {
   const oR = 100;
   const value = val;
 
+  const lightTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+
   const chartData = [
-    { name: 'A', value: val, color: '#ff3838' },
-    { name: 'B', value: 100 - val, color: '#737373' },
+    { name: 'A', value: val, color: lightTheme ? '#ff6b6bff' : '#ff3838' },
+    { name: 'B', value: 100 - val, color: lightTheme ? '#a8a8a8ff' : '#737373' },
   ];
 
   return (

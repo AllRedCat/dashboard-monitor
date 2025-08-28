@@ -86,3 +86,9 @@
   width: 100%;
   justify-content: space-evenly;
 }
+
+@media (prefers-color-scheme: light) {
+  .container {
+    box-shadow: 0 0 10px rgb(200, 200, 200);
+  }
+}
