@@ -4,8 +4,6 @@ import FullPieChart from './components/fullPieChart'
 import LineChart from './components/lineChart'
 import './App.css'
 
-
-
 type Metrics = {
   cpu_percent: number;
   disk_free: number;
@@ -110,7 +108,8 @@ function App() {
   };
 
   useEffect(() => {
-    const ws = new WebSocket('ws://192.168.15.10:8080/ws');
+    const wsURL = import.meta.env.VITE_WS_URL
+    const ws = new WebSocket(wsURL);
 
     ws.onopen = () => {
       console.log('WebSocket connection established');
