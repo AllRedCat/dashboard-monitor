@@ -33,6 +33,14 @@
   }
 }
 
+.m-top-0 {
+  margin-top: 0;
+}
+
+.m-bot-0 {
+  margin-bottom: 0;
+}
+
 .card {
   padding: 2em;
 }
@@ -41,13 +49,14 @@
   color: #888;
 }
 
-.container>h2 {
-  color: white;
-  margin-bottom: 0;
-}
-
 .container>p {
   margin-top: 6px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .box {
@@ -62,10 +71,18 @@
   flex-direction: column;
   border-radius: 15px;
   box-shadow: 0 0 10px rgb(20, 20, 20);
+  width: 100%;
 }
 
 .center {
+  padding: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.text {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
 }
