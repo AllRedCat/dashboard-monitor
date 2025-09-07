@@ -87,6 +87,24 @@
   justify-content: space-evenly;
 }
 
+.disk-1 {
+  width: 12px;
+  height: 12px;
+  background-color: #0088FE;
+  display: inline-block;
+  margin-right: 5px;
+  border-radius: 3px;
+}
+
+.disk-2 {
+  width: 12px;
+  height: 12px;
+  background-color: #00C49F;
+  display: inline-block;
+  margin-right: 5px;
+  border-radius: 3px;
+}
+
 @media (prefers-color-scheme: light) {
   .container {
     box-shadow: 0 0 10px rgb(200, 200, 200);

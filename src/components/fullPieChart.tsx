@@ -64,7 +64,7 @@ export default function Example(wid: number, hei: number, val: number, total: nu
                     cx="50%"
                     cy="50%"
                     labelLine={false}
-                    label={renderCustomizedLabel}
+                    // label={renderCustomizedLabel}
                     innerRadius={40}
                     outerRadius={80}
                     fill="#8884d8"

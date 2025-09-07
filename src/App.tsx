@@ -2,47 +2,9 @@ import { useState, useEffect, useRef } from 'react'
 import ChartPie from './components/pieChart'
 import FullPieChart from './components/fullPieChart'
 import LineChart from './components/lineChart'
-import './App.css'
-
-type Metrics = {
-  cpu_percent: number;
-  disk_free: number;
-  disk_total: number;
-  disk_used: number;
-  memory_total: number;
-  memory_used: number;
-  memory_percent: number;
-  net_recv: number;
-  net_sent: number;
-}
-
-type NetworkDelta = {
-  net_recv_delta: number;
-  net_sent_delta: number;
-  net_recv_rate: number;
-  net_sent_rate: number;
-}
-
-interface NetworkDataPoint {
-  name: string;
-  received: number;
-  sent: number;
-  timestamp: number;
-}
-
-// Função para criar dados iniciais
-const createInitialData = (): NetworkDataPoint[] => {
-  const data: NetworkDataPoint[] = [];
-  for (let i = 1; i <= 10; i++) {
-    data.push({
-      name: i.toString(),
-      received: 0,
-      sent: 0,
-      timestamp: Date.now()
-    });
-  }
-  return data;
-};
+import './styles/App.css'
+import type { Metrics, NetworkDelta, NetworkDataPoint } from './types/metrics'
+import { createInitialData } from './utils/initialData'
 
 function App() {
   const [metrics, setMetrics] = useState<Metrics>();
@@ -53,7 +15,9 @@ function App() {
     net_sent_rate: 0
   });
 
+  // Armazenar os dados do gráfico de rede
   const [networkChartData, setNetworkChartData] = useState<NetworkDataPoint[]>(createInitialData);
+
   // Armazenar os valores anteriores de net_recv e net_sent sem causar re-renderizações
   const previousNetRef = useRef<{ net_recv: number; net_sent: number } | null>(null);
   const dataPointCount = useRef(0);
@@ -191,9 +155,9 @@ function App() {
               {FullPieChart(300, 180, metrics.disk_used, metrics.disk_total)}
               <h2 className='m-bot-0'>DISK: {((metrics.disk_used / metrics.disk_total) * 100).toFixed(2)}%</h2>
               <p>
-                Usage: {Math.round(metrics.disk_used / 1024 / 1024 / 1024 * 100) / 100}gb
+                <div className='disk-1'></div>Usage: {Math.round(metrics.disk_used / 1024 / 1024 / 1024 * 100) / 100}gb
                 <br />
-                Total: {Math.round(metrics.disk_total / 1024 / 1024 / 1024 * 100) / 100}gb
+                <div className='disk-2'></div>Total: {Math.round(metrics.disk_total / 1024 / 1024 / 1024 * 100) / 100}gb
                 <br />
                 Free: {Math.round((metrics.disk_total - metrics.disk_used) / 1024 / 1024 * 100) / 100}gb
               </p>
@@ -228,32 +192,6 @@ function App() {
       ) : (
         <p>Loading metrics...</p>
       )}
-      {/* <div>
-        {metrics ? (
-          <div>
-            <p>CPU Usage: {Math.round(metrics.cpu_percent * 100) / 100}%</p>
-            <p>Disk Usage: {Math.round(metrics.disk_used / 1024 / 1024 / 1024 * 100) / 100}gb / {Math.round(metrics.disk_total / 1024 / 1024 / 1024 * 100) / 100}gb
-              (Free: {Math.round((metrics.disk_total - metrics.disk_used) / 1024 / 1024 / 1024 * 100) / 100}gb)</p>
-            <p>Memory Usage: {Math.round(metrics.memory_used / 1024 / 1024 * 100) / 100}mb / {Math.round(metrics.memory_total / 1024 / 1024 * 100) / 100}mb
-              (Free: {Math.round((metrics.memory_total - metrics.memory_used) / 1024 / 1024 * 100) / 100}mb)
-              <br />
-              <strong>Usage: {metrics.memory_percent}%</strong>
-            </p>
-            <p>Network Received: {formatBytes(metrics.net_recv)}
-              {networkRates.net_recv_delta > 0 && (
-                <span> (Δ: {formatBytes(networkRates.net_recv_delta)} | Rate: {formatNetworkRate(networkRates.net_recv_rate)})</span>
-              )}
-            </p>
-            <p>Network Sent: {formatBytes(metrics.net_sent)}
-              {networkRates.net_sent_delta > 0 && (
-                <span> (Δ: {formatBytes(networkRates.net_sent_delta)} | Rate: {formatNetworkRate(networkRates.net_sent_rate)})</span>
-              )}
-            </p>
-          </div>
-        ) : (
-          <p>Loading metrics...</p>
-        )}
-      </div> */}
     </>
   )
 }
